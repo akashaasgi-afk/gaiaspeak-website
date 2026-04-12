@@ -94,3 +94,68 @@ export const TOKEN_DISTRIBUTION = {
   pioneers: 0.01,
 };
 
+// Operations wallet for bracelet reservations
+export const OPERATIONS_WALLET = '0x0000000000000000000000000000000000000000'; // TO BE SET
+
+// WHITE Bracelet Pre-order Contract (Reservation + NFT)
+export const BRACELET_RESERVATION_ADDRESS = '0x0000000000000000000000000000000000000000'; // TO BE DEPLOYED
+
+export const BRACELET_RESERVATION_ABI = [
+  {
+    inputs: [
+      { internalType: 'uint256', name: 'quantity', type: 'uint256' },
+      { internalType: 'string', name: 'size', type: 'string' },
+      { internalType: 'string', name: 'color', type: 'string' },
+    ],
+    name: 'reserveWristband',
+    outputs: [{ internalType: 'uint256', name: 'reservationId', type: 'uint256' }],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getReservationPrice',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'user', type: 'address' }],
+    name: 'getReservations',
+    outputs: [{ internalType: 'uint256[]', name: '', type: 'uint256[]' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+];
+
+// Minimum token balance required for pre-order (in tokens, 18 decimals)
+export const PREORDER_MIN_BALANCE = {
+  GSG: 0.1, // 0.1 gram of gold
+  GSS: 1.0, // 1 gram of silver
+};
+
+// Bracelet price in tokens (placeholder)
+export const BRACELET_PRICE = {
+  GSG: 1.0, // 1 gram gold per bracelet
+  GSS: 30.0, // 30 grams silver per bracelet
+};
+
+// Available bracelet options
+export const BRACELET_OPTIONS = {
+  sizes: ['XS', 'S', 'M', 'L', 'XL'],
+  colors: ['Midnight Black', 'Arctic White', 'Rose Gold', 'Champagne'],
+};
+
+// Countries list for dropdown
+export const COUNTRIES = [
+  'Afghanistan', 'Albania', 'Algeria', 'Argentina', 'Australia', 'Austria',
+  'Belgium', 'Brazil', 'Canada', 'Chile', 'China', 'Colombia', 'Croatia',
+  'Czech Republic', 'Denmark', 'Egypt', 'Finland', 'France', 'Germany',
+  'Ghana', 'Greece', 'Hong Kong', 'Hungary', 'India', 'Indonesia', 'Ireland',
+  'Israel', 'Italy', 'Japan', 'Kenya', 'Malaysia', 'Mexico', 'Morocco',
+  'Netherlands', 'New Zealand', 'Nigeria', 'Norway', 'Pakistan', 'Peru',
+  'Philippines', 'Poland', 'Portugal', 'Romania', 'Russia', 'Saudi Arabia',
+  'Singapore', 'South Africa', 'South Korea', 'Spain', 'Sweden', 'Switzerland',
+  'Taiwan', 'Thailand', 'Turkey', 'UAE', 'UK', 'Ukraine', 'USA', 'Vietnam',
+];
+
