@@ -4,34 +4,19 @@ import { getReservationCount } from '../config/supabase';
 
 const features = [
   {
-    icon: '📱',
-    title: 'App Integration',
-    desc: 'Full GaiaSpeak ecosystem in your wrist',
+    icon: '�️',
+    title: 'Autonomous + On-chain',
+    desc: 'Self-directed wearable logic with secure blockchain identity',
   },
   {
-    icon: '💳',
-    title: 'Payment Function',
-    desc: 'Tap to pay with your tokens',
-  },
-  {
-    icon: '🔐',
-    title: 'Identity Verification',
-    desc: 'Secure biometric authentication',
+    icon: '�',
+    title: 'Laser UX + NFT Tap',
+    desc: 'Projected controls and one-touch NFT creation',
   },
   {
     icon: '❤️',
-    title: 'Health Monitoring',
-    desc: 'Track vitals in real-time',
-  },
-  {
-    icon: '🌍',
-    title: 'Environmental Sensing',
-    desc: 'Air quality & UV detection',
-  },
-  {
-    icon: '📡',
-    title: 'Offline Capability',
-    desc: 'Works without connectivity',
+    title: 'Climate + Health Signals',
+    desc: 'Wellness metrics and environmental sensing in one form factor',
   },
 ];
 
@@ -49,7 +34,7 @@ export function WhiteSection() {
   }, []);
 
   return (
-    <section id="white" className="py-16 sm:py-20 px-4 bg-gradient-to-b from-slate-900/50 to-slate-950">
+  <section id="white" className="py-16 sm:py-20 px-4 bg-linear-to-b from-slate-900/50 to-slate-950">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="text-center mb-10 sm:mb-16">
@@ -60,13 +45,11 @@ export function WhiteSection() {
             </span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-slate-100 mb-4">
-            <span className="text-white font-semibold">WHITE</span> is not a crisis.
-            <br className="hidden sm:block" />
-            <span className="text-slate-400 italic"> WHITE is a celebration.</span>
+            Meet the <span className="text-white font-semibold">GaiaSpeak Wristband</span>.
           </h2>
           <p className="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            The moment GaiaSpeak crosses from the digital into the physical world.
-            A wearable device containing the full GaiaSpeak ecosystem.
+            A fast preview of our wearable layer. View the full product page for specs, visuals,
+            and pre-order/interest access.
           </p>
         </div>
 
@@ -84,7 +67,7 @@ export function WhiteSection() {
         </div>
 
         {/* Features Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-10 sm:mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-10 sm:mb-16">
           {features.map((f) => (
             <div
               key={f.title}
@@ -99,25 +82,25 @@ export function WhiteSection() {
 
         {/* CTA */}
         <div className="text-center">
-          <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-4 sm:p-6 rounded-xl bg-gradient-to-r from-slate-800/50 via-slate-800/30 to-slate-800/50 border border-slate-700/30">
+          <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-4 sm:p-6 rounded-xl bg-linear-to-r from-slate-800/50 via-slate-800/30 to-slate-800/50 border border-slate-700/30">
             <div className="text-center sm:text-left">
               <h3 className="text-base sm:text-lg font-semibold text-slate-100 mb-1">
-                Reserve Your Bracelet
+                Explore the Wristband
               </h3>
               <p className="text-xs sm:text-sm text-slate-500">
-                Hardware revenue independent of token market. Pay with GSG or GSS tokens.
+                See full feature breakdown, sample visuals, and join the pre-order/interest flow.
               </p>
             </div>
             <Link
-              to="/preorder"
+              to="/wristband"
               className="px-6 sm:px-8 py-3 bg-white hover:bg-slate-100 text-slate-900 font-semibold rounded transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-white/10 whitespace-nowrap text-sm sm:text-base"
             >
-              Pre-Order Now
+              View More Details
             </Link>
           </div>
 
           <p className="mt-4 text-xs text-slate-600">
-            Tokens transferred to Operations Wallet · Reservation NFT minted to your wallet
+            Wristband image shown on the next page is a sample render (not final production hardware)
           </p>
         </div>
       </div>

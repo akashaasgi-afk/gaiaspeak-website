@@ -92,7 +92,7 @@ export function PreOrderPage() {
 
           {/* CTA */}
           <div className="text-center">
-            <div className="inline-flex flex-col items-center gap-4 p-6 rounded-xl bg-gradient-to-r from-slate-800/50 via-slate-800/30 to-slate-800/50 border border-slate-700/30">
+            <div className="inline-flex flex-col items-center gap-4 p-6 rounded-xl bg-linear-to-r from-slate-800/50 via-slate-800/30 to-slate-800/50 border border-slate-700/30">
               <div className="text-center">
                 <h3 className="text-xl font-semibold text-slate-100 mb-2">Reserve Your Bracelet</h3>
                 <p className="text-slate-400 text-sm">Hold GSG or GSS tokens to qualify for pre-order</p>
