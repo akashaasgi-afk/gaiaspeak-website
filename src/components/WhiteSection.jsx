@@ -2,6 +2,12 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getReservationCount } from '../config/supabase';
 
+const braceletImages = [
+  '/b_1.jpeg',
+  '/b_2.jpeg',
+  '/b_3.jpeg',
+];
+
 const features = [
   {
     icon: '�️',
@@ -22,6 +28,7 @@ const features = [
 
 export function WhiteSection() {
   const [orderCount, setOrderCount] = useState(0);
+  const [currentImage, setCurrentImage] = useState(0);
 
   useEffect(() => {
     async function fetchCount() {
@@ -31,6 +38,14 @@ export function WhiteSection() {
       }
     }
     fetchCount();
+  }, []);
+
+  // Auto-rotate images
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % braceletImages.length);
+    }, 4000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -53,17 +68,42 @@ export function WhiteSection() {
           </p>
         </div>
 
-        {/* Product Visual */}
+        {/* Product Visual - Image Carousel */}
         <div className="relative mb-10 sm:mb-16">
-          {/* <div className="aspect-[16/9] sm:aspect-[21/9] rounded-lg sm:rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/30 overflow-hidden flex items-center justify-center"> */}
-            {/* Placeholder for bracelet image/3D */}
-            {/* <div className="text-center">
-              <div className="text-5xl sm:text-7xl mb-4">⌚</div>
-              <p className="text-xs sm:text-sm text-slate-500">GaiaSpeak Bracelet · WHITE Collection</p>
-            </div> */}
-            {/* Glow effects */}
-            {/* <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 sm:w-96 h-48 sm:h-96 bg-white/5 rounded-full blur-[80px] sm:blur-[120px]" /> */}
-          {/* </div> */}
+          <div className="relative aspect-[4/3] sm:aspect-[16/9] rounded-lg sm:rounded-2xl overflow-hidden border border-slate-700/30">
+            {/* Images */}
+            {braceletImages.map((src, index) => (
+              <img
+                key={src}
+                src={src}
+                alt={`WHITE Bracelet ${index + 1}`}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+                  index === currentImage ? 'opacity-100' : 'opacity-0'
+                }`}
+              />
+            ))}
+            {/* Overlay gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
+            {/* Caption */}
+            <div className="absolute bottom-4 left-4 right-4 text-center">
+              <p className="text-xs sm:text-sm text-white/80">GaiaSpeak Bracelet · WHITE Collection</p>
+            </div>
+          </div>
+
+          {/* Image Indicators */}
+          <div className="flex justify-center gap-2 mt-4">
+            {braceletImages.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentImage(index)}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  index === currentImage
+                    ? 'bg-white w-6'
+                    : 'bg-white/30 hover:bg-white/50'
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Features Grid */}
