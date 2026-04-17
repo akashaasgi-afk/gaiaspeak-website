@@ -458,7 +458,6 @@ const MOCK_SUPPLIERS = [
     contact_email: 'trade@atlasbullion.ch',
     contact_phone: '+41 22 555 0111',
     website: 'https://atlasbullion.example',
-    price_per_gram: 72.9,
     currency: 'USD',
     min_order_grams: 500,
     lead_time_days: 7,
@@ -466,6 +465,7 @@ const MOCK_SUPPLIERS = [
     active: true,
     notes: 'LBMA Good Delivery refiner.',
     created_at: new Date().toISOString(),
+    supplier_prices: [],
   },
 ];
 
@@ -477,7 +477,7 @@ export async function getAllGoldSuppliers() {
   try {
     const { data, error } = await supabase
       .from('suppliers')
-      .select('*')
+      .select('*, supplier_prices(id, gold_price, silver_price, created_at)')
       .order('created_at', { ascending: false });
 
     if (error) throw error;
@@ -510,7 +510,6 @@ export async function createGoldSupplier(payload) {
         contact_email: payload.contact_email || null,
         contact_phone: payload.contact_phone || null,
         website: payload.website || null,
-        price_per_gram: Number(payload.price_per_gram) || 0,
         currency: payload.currency || 'USD',
         min_order_grams: Number(payload.min_order_grams) || 1,
         lead_time_days: Number(payload.lead_time_days) || 14,
@@ -538,7 +537,7 @@ export async function updateGoldSupplier(id, updates) {
 
   try {
     const patch = { ...updates };
-    if ('price_per_gram' in patch) patch.price_per_gram = Number(patch.price_per_gram) || 0;
+    delete patch.price_per_gram; // prices live in supplier_prices table
     if ('min_order_grams' in patch) patch.min_order_grams = Number(patch.min_order_grams) || 1;
     if ('lead_time_days' in patch) patch.lead_time_days = Number(patch.lead_time_days) || 14;
 
@@ -667,7 +666,30 @@ export async function getSupplierById(id) {
   }
 }
 
-// Insert a new row in supplier_prices. Prices are in USD per kilogram.
+// Fetch all price submissions for a given supplier, newest first.
+export async function getSupplierPrices(supplierId) {
+  if (!supplierId) return { success: false, error: 'Missing supplier id' };
+
+  if (!supabase) {
+    return { success: true, mock: true, prices: [] };
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('supplier_prices')
+      .select('*')
+      .eq('supplier_id', supplierId)
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return { success: true, prices: data || [] };
+  } catch (error) {
+    console.error('Error fetching supplier prices:', error);
+    return { success: false, error: error.message, prices: [] };
+  }
+}
+
+// Insert a new row in supplier_prices.
 export async function submitSupplierPrices({ supplierId, goldPrice, silverPrice }) {
   if (!supplierId) return { success: false, error: 'Missing supplier id' };
 
