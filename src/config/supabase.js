@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { Axios } from 'axios';
 
 // Supabase configuration
 // These should be set in environment variables for production
@@ -475,7 +476,7 @@ export async function getAllGoldSuppliers() {
 
   try {
     const { data, error } = await supabase
-      .from('gold_suppliers')
+      .from('suppliers')
       .select('*')
       .order('created_at', { ascending: false });
 
@@ -502,7 +503,7 @@ export async function createGoldSupplier(payload) {
 
   try {
     const { data, error } = await supabase
-      .from('gold_suppliers')
+      .from('suppliers')
       .insert([{
         name: payload.name.trim(),
         country: payload.country || null,
@@ -542,7 +543,7 @@ export async function updateGoldSupplier(id, updates) {
     if ('lead_time_days' in patch) patch.lead_time_days = Number(patch.lead_time_days) || 14;
 
     const { data, error } = await supabase
-      .from('gold_suppliers')
+      .from('suppliers')
       .update(patch)
       .eq('id', id)
       .select('*')
@@ -565,7 +566,7 @@ export async function deleteGoldSupplier(id) {
 
   try {
     const { error } = await supabase
-      .from('gold_suppliers')
+      .from('suppliers')
       .delete()
       .eq('id', id);
 
@@ -573,6 +574,132 @@ export async function deleteGoldSupplier(id) {
     return { success: true };
   } catch (error) {
     console.error('Error deleting gold supplier:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+
+export async function sendingEmailToSuppliers() {
+  if (!supabase) {
+    return { success: true, mock: true };
+  }
+
+  const api_url = import.meta.env.VITE_API_URL;
+
+  try {
+    // 1. Fetch the list of suppliers
+    const { data: suppliers, error: fetchError } = await supabase
+      .from('suppliers')
+      .select('id, name, contact_email')
+      .order('created_at', { ascending: false });
+
+    if (fetchError) throw fetchError;
+    if (!suppliers || suppliers.length === 0) return { success: true, message: 'No suppliers found' };
+
+    // 2. Map through suppliers and send requests
+    const tasks = suppliers.map(async (supplier) => {
+      let logEntry = {
+        supplier_id: supplier.id,
+        status: false,
+        message: ''
+      };
+
+      try {
+        const response = await Axios.post(api_url + '/send-supplier-email', {
+          id: supplier.id,
+          name: supplier.name,
+          email: supplier.contact_email
+        });
+
+        // SUCCESS: Capture the response from your endpoint
+        logEntry.status = true;
+        logEntry.message = response.data?.message || JSON.stringify(response.data) || 'Email sent successfully';
+
+      } catch (err) {
+        // ERROR: Capture the error message
+        logEntry.status = false;
+        logEntry.message = err.response?.data?.message || err.message || 'Failed to send email';
+      }
+
+      // 3. Store the result (Success or Error) in audit_logs
+      const { error: logError } = await supabase
+        .from('audit_logs')
+        .insert(logEntry);
+
+      if (logError) console.error('Failed to save audit log:', logError);
+      
+      return logEntry;
+    });
+
+    // Execute all requests in parallel
+    const results = await Promise.allSettled(tasks);
+    
+    return { success: true, results };
+
+  } catch (error) {
+    console.error('Error notifying suppliers:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+// Public fetch of a single supplier by id — used by the supplier price-submission page
+// that suppliers land on from the invitation email.
+export async function getSupplierById(id) {
+  if (!id) return { success: false, error: 'Missing supplier id' };
+
+  if (!supabase) {
+    return { success: true, mock: true, supplier: { id, name: 'Mock Supplier' } };
+  }
+
+  try {
+    const { data, error } = await supabase
+        .from('suppliers')
+        .select('id, name, country, contact_email')
+        .eq('id', id)
+        .maybeSingle();
+
+    if (error) throw error;
+    if (!data) return { success: false, error: 'Supplier not found' };
+    return { success: true, supplier: data };
+  } catch (error) {
+    console.error('Error fetching supplier:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+// Insert a new row in supplier_prices. Prices are in USD per kilogram.
+export async function submitSupplierPrices({ supplierId, goldPrice, silverPrice }) {
+  if (!supplierId) return { success: false, error: 'Missing supplier id' };
+
+  const gold = Number(goldPrice);
+  const silver = Number(silverPrice);
+
+  if (!Number.isFinite(gold) || gold <= 0) {
+    return { success: false, error: 'Gold price must be a positive number' };
+  }
+  if (!Number.isFinite(silver) || silver <= 0) {
+    return { success: false, error: 'Silver price must be a positive number' };
+  }
+
+  if (!supabase) {
+    return {
+      success: true,
+      mock: true,
+      entry: { supplier_id: supplierId, gold_price: gold, silver_price: silver },
+    };
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('supplier_prices')
+      .insert([{ supplier_id: supplierId, gold_price: gold, silver_price: silver }])
+      .select()
+      .single();
+
+    if (error) throw error;
+    return { success: true, entry: data };
+  } catch (error) {
+    console.error('Error submitting supplier prices:', error);
     return { success: false, error: error.message };
   }
 }
