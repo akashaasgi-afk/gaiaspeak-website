@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gaia Speak — The Conscious Infrastructure</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dim: #7A6030;
+    --black: #050505;
+    --black-2: #0D0D0D;
+    --black-3: #141414;
+    --black-4: #1C1C1C;
+    --white: #F5F0E8;
+    --white-dim: #9A9080;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--white); font-family: 'Rajdhani', sans-serif; overflow-x: hidden; }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dim); }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 24px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: linear-gradient(to bottom, rgba(5,5,5,0.95), transparent);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 300; letter-spacing: 0.3em;
+    color: var(--gold); text-decoration: none; text-transform: uppercase;
+  }
+
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--white-dim); text-decoration: none; transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; position: relative; padding: 120px 24px 80px; overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 60%, rgba(201,168,76,0.07) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 30% at 20% 80%, rgba(201,168,76,0.04) 0%, transparent 60%);
+  }
+
+  .hero-circle {
+    position: absolute; width: 600px; height: 600px;
+    border: 1px solid rgba(201,168,76,0.08); border-radius: 50%;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    animation: rotate 40s linear infinite;
+  }
+
+  .hero-circle::before {
+    content: ''; position: absolute; width: 400px; height: 400px;
+    border: 1px solid rgba(201,168,76,0.05); border-radius: 50%;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    animation: rotate 25s linear infinite reverse;
+  }
+
+  .hero-circle::after {
+    content: ''; position: absolute; width: 12px; height: 12px;
+    background: var(--gold); border-radius: 50%;
+    top: -6px; left: 50%; transform: translateX(-50%);
+    box-shadow: 0 0 20px var(--gold);
+  }
+
+  @keyframes rotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  .hero-tag {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.4em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 32px;
+    opacity: 0; animation: fadeUp 1s ease 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(56px, 10vw, 120px); font-weight: 300;
+    line-height: 0.9; letter-spacing: -0.02em; margin-bottom: 32px;
+    opacity: 0; animation: fadeUp 1s ease 0.5s forwards;
+  }
+  .hero-title em { font-style: italic; color: var(--gold); }
+
+  .hero-subtitle {
+    font-size: 14px; font-weight: 400; letter-spacing: 0.15em;
+    color: var(--white-dim); max-width: 480px; line-height: 1.8; margin-bottom: 56px;
+    opacity: 0; animation: fadeUp 1s ease 0.7s forwards;
+  }
+
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 16px;
+    padding: 16px 40px; border: 1px solid var(--gold);
+    color: var(--gold); font-family: 'Rajdhani', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.3em;
+    text-transform: uppercase; text-decoration: none; transition: all 0.4s;
+    opacity: 0; animation: fadeUp 1s ease 0.9s forwards;
+  }
+  .hero-cta:hover { background: var(--gold); color: var(--black); }
+  .hero-cta::after { content: '→'; transition: transform 0.3s; }
+  .hero-cta:hover::after { transform: translateX(6px); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .divider {
+    display: flex; align-items: center; gap: 24px;
+    padding: 0 48px; margin: 0 auto; max-width: 1200px;
+  }
+  .divider-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--gold-dim), transparent); }
+  .divider-diamond { width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0; }
+
+  section { padding: 120px 48px; max-width: 1200px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.4em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 24px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .section-label::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 64px); font-weight: 300; line-height: 1.1; margin-bottom: 24px;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  .section-body { font-size: 15px; font-weight: 400; color: var(--white-dim); line-height: 1.9; max-width: 640px; }
+
+  .token-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 64px; background: var(--gold-dim); }
+  .token-card { background: var(--black-3); padding: 48px; transition: background 0.3s; }
+  .token-card:hover { background: var(--black-4); }
+  .token-card-label { font-size: 10px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 16px; }
+  .token-card-value { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: var(--gold); line-height: 1; margin-bottom: 8px; }
+  .token-card-desc { font-size: 13px; color: var(--white-dim); line-height: 1.7; }
+
+  .stages-list { margin-top: 80px; display: flex; flex-direction: column; gap: 2px; }
+  .stage-item {
+    display: grid; grid-template-columns: 80px 1fr auto;
+    align-items: start; gap: 40px; padding: 48px;
+    background: var(--black-3); border-left: 2px solid transparent; transition: all 0.4s;
+  }
+  .stage-item:hover { background: var(--black-4); border-left-color: var(--gold); }
+  .stage-dot { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+  .stage-dot.green { background: rgba(34,197,94,0.15); }
+  .stage-dot.yellow { background: rgba(234,179,8,0.15); }
+  .stage-dot.gold { background: rgba(201,168,76,0.15); }
+  .stage-dot.blue { background: rgba(59,130,246,0.15); }
+  .stage-dot.red { background: rgba(239,68,68,0.15); }
+  .stage-dot.white { background: rgba(255,255,255,0.1); }
+  .stage-name { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; margin-bottom: 12px; }
+  .stage-desc { font-size: 13px; color: var(--white-dim); line-height: 1.8; max-width: 560px; }
+  .stage-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); border: 1px solid var(--gold-dim); padding: 6px 14px; white-space: nowrap; align-self: start; }
+
+  .fees-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 64px; background: var(--gold-dim); }
+  .fee-card { background: var(--black-3); padding: 40px; }
+  .fee-pct { font-family: 'Cormorant Garamond', serif; font-size: 56px; font-weight: 300; color: var(--gold); line-height: 1; margin-bottom: 12px; }
+  .fee-title { font-size: 11px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--white); margin-bottom: 8px; }
+  .fee-desc { font-size: 12px; color: var(--white-dim); line-height: 1.7; }
+
+  .mint-flow { display: flex; align-items: stretch; gap: 0; margin-top: 64px; flex-wrap: wrap; }
+  .mint-step { flex: 1; min-width: 180px; padding: 40px 32px; background: var(--black-3); position: relative; text-align: center; }
+  .mint-step:not(:last-child)::after { content: '→'; position: absolute; right: -16px; top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 20px; z-index: 1; }
+  .mint-num { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: rgba(201,168,76,0.2); line-height: 1; margin-bottom: 16px; }
+  .mint-title { font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .mint-desc { font-size: 12px; color: var(--white-dim); line-height: 1.7; }
+
+  .pioneer-block {
+    margin-top: 64px; padding: 64px; background: var(--black-3);
+    border: 1px solid rgba(201,168,76,0.15); position: relative; overflow: hidden;
+  }
+  .pioneer-block::before {
+    content: ''; position: absolute; top: -100px; right: -100px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 70%); border-radius: 50%;
+  }
+  .pioneer-title { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 300; margin-bottom: 24px; }
+  .pioneer-title em { font-style: italic; color: var(--gold); }
+  .pioneer-text { font-size: 14px; color: var(--white-dim); line-height: 1.9; max-width: 640px; margin-bottom: 40px; }
+  .pioneer-stats { display: flex; gap: 48px; flex-wrap: wrap; }
+  .pioneer-stat-val { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 300; color: var(--gold); line-height: 1; }
+  .pioneer-stat-label { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white-dim); margin-top: 8px; }
+
+  footer { padding: 80px 48px 48px; text-align: center; border-top: 1px solid rgba(201,168,76,0.1); }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; margin-bottom: 24px; }
+  .footer-tagline { font-size: 12px; letter-spacing: 0.25em; color: var(--white-dim); text-transform: uppercase; margin-bottom: 48px; }
+  .footer-copy { font-size: 11px; color: rgba(154,144,128,0.4); letter-spacing: 0.1em; }
+
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    .token-grid { grid-template-columns: 1fr; }
+    .fees-grid { grid-template-columns: 1fr; }
+    .stage-item { grid-template-columns: 48px 1fr; }
+    .stage-tag { display: none; }
+    .mint-flow { flex-direction: column; }
+    .mint-step::after { display: none; }
+    .pioneer-block { padding: 40px 24px; }
+    footer { padding: 60px 24px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Gaia Speak</a>
+  <ul class="nav-links">
+    <li><a href="#token">GS Token</a></li>
+    <li><a href="#stages">Stages</a></li>
+    <li><a href="#fees">Fees</a></li>
+    <li><a href="#pioneers">Pioneers</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-circle"></div>
+  <p class="hero-tag">The Conscious Infrastructure of the Next Human Era</p>
+  <h1 class="hero-title">Gaia<br><em>Speak</em></h1>
+  <p class="hero-subtitle">A gold-backed digital ecosystem. Self-regulating, autonomous, and built for planetary longevity.</p>
+  <a href="#token" class="hero-cta">Explore the System</a>
+</div>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<section id="token">
+  <p class="section-label">GS Token</p>
+  <h2 class="section-title">One Token.<br><em>One Gram of Gold.</em></h2>
+  <p class="section-body">Each GS token is backed by one gram of physical gold — allocated, auditable, and stored in insured vault facilities. GS is not a synthetic derivative. It represents direct physical asset correlation.</p>
+  <div class="token-grid">
+    <div class="token-card">
+      <p class="token-card-label">Initial Price</p>
+      <p class="token-card-value">$7.77</p>
+      <p class="token-card-desc">Entry price per GS token during genesis phase. Price increases dynamically until 1 GS equals 1 gram of gold.</p>
+    </div>
+    <div class="token-card">
+      <p class="token-card-label">Gold Parity Target</p>
+      <p class="token-card-value">1g Au</p>
+      <p class="token-card-desc">Each newly minted GS token corresponds to the acquisition of 1 gram of physical gold, verified by oracle.</p>
+    </div>
+    <div class="token-card">
+      <p class="token-card-label">Minimum Transfer</p>
+      <p class="token-card-value">0.5 GS</p>
+      <p class="token-card-desc">Any transfer below 0.5 GS is reverted at the smart contract level. Anti-spam protection built-in.</p>
+    </div>
+    <div class="token-card">
+      <p class="token-card-label">Mint Fee</p>
+      <p class="token-card-value">2%</p>
+      <p class="token-card-desc">1% to Founder Wallet for development. 1% to Gold Reserve Wallet for vault, insurance, and audits.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<section id="stages">
+  <p class="section-label">Stage System</p>
+  <h2 class="section-title">Six Stages.<br><em>One Evolution.</em></h2>
+  <p class="section-body">Gaia Speak operates through a color-coded stage progression. Each stage unlocks new capabilities and enforces strict economic rules through smart contract logic.</p>
+  <div class="stages-list">
+    <div class="stage-item">
+      <div class="stage-dot green">🟢</div>
+      <div>
+        <p class="stage-name">Green Stage</p>
+        <p class="stage-desc">Bootstrap activation. Triggered after 6 GS tokens are sent (5 Major Pioneers + 1 Founder). 98% of distribution goes to the Gold-Back Reserve. Major Pioneer rewards exist only in this stage.</p>
+      </div>
+      <span class="stage-tag">Bootstrap</span>
+    </div>
+    <div class="stage-item">
+      <div class="stage-dot yellow">🟡</div>
+      <div>
+        <p class="stage-name">Yellow Stage</p>
+        <p class="stage-desc">Pre-gold validation. Economic observation and system stabilization. Oracle contracts and cross-chain infrastructure prepared. No gold connected on-chain yet.</p>
+      </div>
+      <span class="stage-tag">Validation</span>
+    </div>
+    <div class="stage-item">
+      <div class="stage-dot gold">🟨</div>
+      <div>
+        <p class="stage-name">Gold Stage</p>
+        <p class="stage-desc">Gold-back activation. Triggered manually by the Founder once physical gold is acquired and provably linked on-chain. 60% to Gaia Speak, 40% to Founder Wallet.</p>
+      </div>
+      <span class="stage-tag">Gold Activation</span>
+    </div>
+    <div class="stage-item">
+      <div class="stage-dot blue">🔵</div>
+      <div>
+        <p class="stage-name">Blue Stage</p>
+        <p class="stage-desc">App and membership economy. 1 GS = 1 month membership. Referral system activates. NFT revenue: 60% creator, 20% Founder, 20% Gold-Back Wallet.</p>
+      </div>
+      <span class="stage-tag">App Economy</span>
+    </div>
+    <div class="stage-item">
+      <div class="stage-dot red">🔴</div>
+      <div>
+        <p class="stage-name">Red Stage</p>
+        <p class="stage-desc">Emergency protection. Triggered automatically when Gold-Back Reserve drops below 40%. New GS token minting is suspended. System enters stabilization mode.</p>
+      </div>
+      <span class="stage-tag">Emergency</span>
+    </div>
+    <div class="stage-item">
+      <div class="stage-dot white">⚪</div>
+      <div>
+        <p class="stage-name">White Stage</p>
+        <p class="stage-desc">Autonomous final stage. Full autonomy. Gaia Speak operates independently of Founder presence. A global open ecosystem — from the planet, for all living beings.</p>
+      </div>
+      <span class="stage-tag">Autonomous</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<section id="fees">
+  <p class="section-label">Transaction Fees</p>
+  <h2 class="section-title">Transparent<br><em>Fee Architecture</em></h2>
+  <p class="section-body">Every transaction fee is hard-coded in the smart contracts. No hidden charges. No adjustable percentages.</p>
+  <div class="fees-grid">
+    <div class="fee-card">
+      <p class="fee-pct">2%</p>
+      <p class="fee-title">External Transactions</p>
+      <p class="fee-desc">Outside the Gaia Speak ecosystem. 1% to Infrastructure Wallet. 1% to Gold-Back Wallet.</p>
+    </div>
+    <div class="fee-card">
+      <p class="fee-pct">0.02%</p>
+      <p class="fee-title">Wallet-to-Wallet</p>
+      <p class="fee-desc">Pair-to-pair transfers between members. Anti-spam and micro-cycle protection.</p>
+    </div>
+    <div class="fee-card">
+      <p class="fee-pct">0%</p>
+      <p class="fee-title">Internal Transactions</p>
+      <p class="fee-desc">Within the Gaia Speak ecosystem. May be reduced or zero depending on active Stage.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<section>
+  <p class="section-label">Minting Process</p>
+  <h2 class="section-title">How GS Tokens<br><em>Are Created</em></h2>
+  <p class="section-body">Every minted token is backed by real gold. The process is automated and transparent through smart contract logic.</p>
+  <div class="mint-flow">
+    <div class="mint-step">
+      <p class="mint-num">01</p>
+      <p class="mint-title">Gold Price</p>
+      <p class="mint-desc">Spot price of gold calculated via Oracle</p>
+    </div>
+    <div class="mint-step">
+      <p class="mint-num">02</p>
+      <p class="mint-title">2% Fee</p>
+      <p class="mint-desc">Minting fee applied and split between Founder and Reserve</p>
+    </div>
+    <div class="mint-step">
+      <p class="mint-num">03</p>
+      <p class="mint-title">Gold Acquired</p>
+      <p class="mint-desc">1 gram equivalent of physical gold is acquired</p>
+    </div>
+    <div class="mint-step">
+      <p class="mint-num">04</p>
+      <p class="mint-title">GS Minted</p>
+      <p class="mint-desc">1 GS token is minted and assigned to wallet</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<section id="pioneers">
+  <p class="section-label">Major Pioneers</p>
+  <h2 class="section-title">The Five Who<br><em>Built the Foundation</em></h2>
+  <p class="section-body">Major Pioneers are not miners. They are validators. They test the system publicly, stress it in real conditions, and confirm that value flows exactly as defined by smart contracts.</p>
+  <div class="pioneer-block">
+    <h3 class="pioneer-title">Recognized for <em>Foundational Risk</em><br>Not Rewarded Endlessly</h3>
+    <p class="pioneer-text">The incentive logic is transparent and enforced by code. Major Pioneer rewards exist only in Green Stage. All percentages stop permanently after Green Stage transition. This prevents the classic failure pattern where early participants become permanent rent-seekers.</p>
+    <div class="pioneer-stats">
+      <div>
+        <p class="pioneer-stat-val">5</p>
+        <p class="pioneer-stat-label">Major Pioneers</p>
+      </div>
+      <div>
+        <p class="pioneer-stat-val">1%</p>
+        <p class="pioneer-stat-label">Total Allocation (Green Stage Only)</p>
+      </div>
+      <div>
+        <p class="pioneer-stat-val">0%</p>
+        <p class="pioneer-stat-label">After Green Stage</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="footer-logo">Gaia Speak</p>
+  <p class="footer-tagline">From the planet — for all living beings</p>
+  <p class="footer-copy">© 2026 Gaia Speak. Smart contract governed. Gold backed. Autonomously operated.</p>
+</footer>
+
+</body>
+</html>
