@@ -1,111 +1,1015 @@
 <!DOCTYPE html>
-<html lang="bg">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GaiaSpeak Protocol — Gold & Silver on the Blockchain</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    :root {
-      --gold: #C9A84C;
-      --gold-light: #E8C96A;
-      --dark: #080810;
-      --text: #EAE2D4;
-      --text-dim: #7A7060;
-    }
-    body { font-family: 'Syne', sans-serif; background: var(--dark); color: var(--text); }
-    .grain::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9998;
-      opacity: 0.4;
-    }
-    .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: all 1s ease; }
-    .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GaiaSpeak — Design Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dim: #8B6914;
+    --obsidian: #0A0A0B;
+    --deep: #111114;
+    --surface: #16161A;
+    --surface2: #1E1E24;
+    --surface3: #26262E;
+    --border: rgba(201,168,76,0.18);
+    --border2: rgba(255,255,255,0.07);
+    --text: #F0EDE8;
+    --text-dim: #8A8578;
+    --silver: #C0C0C8;
+    --silver-light: #E0E0E8;
+    --green: #4CAF6C;
+    --red: #E05252;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--obsidian);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── LAYOUT ── */
+  .mockup-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  .mockup-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .mockup-sub {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-align: center;
+    letter-spacing: 0.1em;
+    margin-bottom: 60px;
+  }
+
+  .screens-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  .screen-label {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .screen-label span {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+  .screen-label.app-label span { background: var(--silver); }
+
+  /* ── BROWSER CHROME ── */
+  .browser-chrome {
+    background: var(--surface2);
+    border-radius: 12px 12px 0 0;
+    border: 1px solid var(--border2);
+    border-bottom: none;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.r { background: #E05252; }
+  .dot.y { background: #C9A84C; }
+  .dot.g { background: #4CAF6C; }
+  .url-bar {
+    flex: 1;
+    background: var(--surface3);
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-left: 8px;
+  }
+
+  /* ── PHONE CHROME ── */
+  .phone-wrap {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 40px;
+    padding: 16px;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+  .phone-screen {
+    background: var(--deep);
+    border-radius: 28px;
+    overflow: hidden;
+    position: relative;
+  }
+  .phone-notch {
+    width: 100px;
+    height: 24px;
+    background: var(--surface2);
+    border-radius: 0 0 16px 16px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .notch-dot { width: 6px; height: 6px; border-radius: 50%; background: #333; }
+  .notch-cam { width: 10px; height: 10px; border-radius: 50%; background: #222; border: 1px solid #333; }
+
+  /* ── SCREEN CONTAINER ── */
+  .screen-body {
+    background: var(--deep);
+    border: 1px solid var(--border2);
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
+  }
+
+  /* ══════════════════════════════════════
+     WEBSITE — FREE VERSION
+  ══════════════════════════════════════ */
+  .site-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,11,0.95);
+  }
+  .site-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+  .site-logo span { color: var(--text-dim); font-weight: 300; font-size: 13px; margin-left: 4px; letter-spacing: 0.1em; }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .btn-connect {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 6px 14px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'DM Mono', monospace;
+  }
+  .btn-app {
+    background: var(--gold);
+    border: none;
+    color: var(--obsidian);
+    padding: 6px 14px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+  }
+
+  .site-hero {
+    padding: 32px 24px 24px;
+    text-align: center;
+    background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 70%);
+  }
+  .hero-tag {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 10px;
+  }
+  .hero-h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .hero-h1 em { color: var(--gold); font-style: normal; font-weight: 600; }
+  .hero-sub {
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+    margin-bottom: 24px;
+  }
+
+  /* Price tickers */
+  .price-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 0 24px 24px;
+  }
+  .price-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .price-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .price-card.silver::before {
+    background: linear-gradient(90deg, transparent, var(--silver), transparent);
+  }
+  .price-metal {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 4px;
+  }
+  .price-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .price-card.silver .price-value { color: var(--silver-light); }
+  .price-gram { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+  .price-change { font-size: 10px; color: var(--green); font-family: 'DM Mono', monospace; float: right; margin-top: -28px; }
+
+  /* Buy panel */
+  .buy-panel {
+    margin: 0 24px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .buy-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+  }
+  .buy-tab {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-family: 'DM Mono', monospace;
+  }
+  .buy-tab.active {
+    color: var(--gold);
+    background: rgba(201,168,76,0.08);
+    border-bottom: 2px solid var(--gold);
+  }
+  .buy-tab.active.silver-tab { color: var(--silver); background: rgba(192,192,200,0.08); border-bottom-color: var(--silver); }
+  .buy-body { padding: 16px; }
+  .input-label { font-size: 10px; color: var(--text-dim); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px; font-family: 'DM Mono', monospace; }
+  .input-row {
+    display: flex;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .input-field {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 10px 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 16px;
+    color: var(--text);
+    outline: none;
+  }
+  .input-unit {
+    padding: 10px 12px;
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+    border-left: 1px solid var(--border2);
+    display: flex;
+    align-items: center;
+  }
+  .you-receive {
+    background: var(--surface2);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .receive-label { font-size: 10px; color: var(--text-dim); letter-spacing: 0.1em; }
+  .receive-value { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--gold); font-weight: 600; }
+  .btn-buy {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+    border: none;
+    border-radius: 6px;
+    color: var(--obsidian);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  /* Locked features banner */
+  .locked-banner {
+    margin: 0 24px 20px;
+    background: var(--surface2);
+    border: 1px dashed rgba(201,168,76,0.3);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .locked-left { display: flex; align-items: center; gap: 10px; }
+  .lock-icon { font-size: 16px; opacity: 0.5; }
+  .locked-text { font-size: 11px; color: var(--text-dim); }
+  .locked-text strong { color: var(--gold); display: block; font-size: 12px; margin-bottom: 2px; }
+  .btn-unlock {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 5px 12px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'DM Mono', monospace;
+    white-space: nowrap;
+  }
+
+  /* Footer note */
+  .site-footer-note {
+    padding: 12px 24px;
+    border-top: 1px solid var(--border2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-powered {
+    font-size: 10px;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+  }
+  .footer-powered span { color: var(--gold); }
+  .footer-links { display: flex; gap: 16px; }
+  .footer-link { font-size: 10px; color: var(--text-dim); text-decoration: none; }
+
+
+  /* ══════════════════════════════════════
+     APP — MEMBERSHIP VERSION
+  ══════════════════════════════════════ */
+  .app-status-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 20px 4px;
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    color: var(--text-dim);
+  }
+
+  .app-header {
+    padding: 8px 20px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+  .app-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gold);
+  }
+  .app-member-badge {
+    background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+    color: var(--obsidian);
+    font-size: 9px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-weight: 500;
+  }
+
+  /* Wallet card */
+  .app-wallet-card {
+    margin: 14px 16px;
+    background: linear-gradient(135deg, var(--surface2), var(--surface3));
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .wallet-glow {
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, rgba(201,168,76,0.15), transparent);
+    border-radius: 50%;
+  }
+  .wallet-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); font-family: 'DM Mono', monospace; margin-bottom: 6px; }
+  .wallet-total {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 14px;
+  }
+  .wallet-total span { color: var(--gold); }
+  .wallet-assets { display: flex; gap: 12px; }
+  .wallet-asset {
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    padding: 8px 12px;
+    flex: 1;
+    border: 1px solid var(--border2);
+  }
+  .asset-symbol { font-size: 9px; letter-spacing: 0.2em; font-family: 'DM Mono', monospace; color: var(--text-dim); margin-bottom: 2px; }
+  .asset-amount { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: var(--gold); }
+  .asset-amount.s { color: var(--silver-light); }
+  .asset-usd { font-size: 10px; color: var(--text-dim); font-family: 'DM Mono', monospace; }
+
+  /* Quick actions */
+  .app-actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding: 0 16px 14px;
+  }
+  .action-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    padding: 10px 6px;
+    text-align: center;
+    cursor: pointer;
+  }
+  .action-icon { font-size: 18px; margin-bottom: 4px; }
+  .action-label { font-size: 9px; color: var(--text-dim); letter-spacing: 0.08em; }
+
+  /* Market section */
+  .app-section-title {
+    padding: 0 16px 8px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .market-row {
+    margin: 0 16px 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .market-left { display: flex; align-items: center; gap: 10px; }
+  .metal-icon {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  }
+  .metal-icon.s { background: linear-gradient(135deg, #888, var(--silver-light)); }
+  .metal-name { font-weight: 500; font-size: 13px; }
+  .metal-ticker { font-size: 10px; color: var(--text-dim); font-family: 'DM Mono', monospace; }
+  .market-right { text-align: right; }
+  .market-price { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: var(--text); }
+  .market-chg { font-size: 10px; color: var(--green); font-family: 'DM Mono', monospace; }
+
+  /* Member features */
+  .member-features {
+    padding: 8px 16px 0;
+  }
+  .feature-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    margin-bottom: 6px;
+  }
+  .feature-icon { font-size: 16px; width: 28px; text-align: center; }
+  .feature-text { flex: 1; }
+  .feature-name { font-size: 12px; font-weight: 500; }
+  .feature-desc { font-size: 10px; color: var(--text-dim); }
+  .feature-badge {
+    font-size: 9px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.1em;
+    padding: 2px 7px;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+  .badge-live { background: rgba(76,175,108,0.15); color: var(--green); border: 1px solid rgba(76,175,108,0.3); }
+  .badge-new { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+
+  /* Bottom nav */
+  .app-bottom-nav {
+    display: flex;
+    border-top: 1px solid var(--border2);
+    padding: 10px 0 6px;
+    margin-top: 10px;
+  }
+  .nav-item {
+    flex: 1;
+    text-align: center;
+    cursor: pointer;
+  }
+  .nav-item-icon { font-size: 18px; display: block; margin-bottom: 2px; }
+  .nav-item-label { font-size: 9px; color: var(--text-dim); letter-spacing: 0.06em; }
+  .nav-item.active .nav-item-label { color: var(--gold); }
+
+  /* ── COMPARISON TABLE ── */
+  .compare-section {
+    margin-top: 60px;
+    padding: 40px 0;
+    border-top: 1px solid var(--border2);
+  }
+  .compare-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--text);
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .compare-title em { color: var(--gold); font-style: normal; }
+  .compare-sub { font-size: 12px; color: var(--text-dim); text-align: center; margin-bottom: 32px; letter-spacing: 0.05em; }
+
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--border2);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .compare-col-head {
+    padding: 16px 20px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-family: 'DM Mono', monospace;
+    border-bottom: 1px solid var(--border2);
+    background: var(--surface);
+  }
+  .compare-col-head.gold-head { color: var(--gold); }
+  .compare-col-head.silver-head { color: var(--silver); }
+  .compare-row {
+    display: contents;
+  }
+  .compare-cell {
+    padding: 12px 20px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border2);
+    border-right: 1px solid var(--border2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .compare-cell:last-child { border-right: none; }
+  .compare-cell.feature-name-cell { color: var(--text-dim); font-size: 12px; }
+  .check { color: var(--green); font-size: 14px; }
+  .cross { color: #555; font-size: 14px; }
+  .lock { color: var(--gold); font-size: 12px; opacity: 0.5; }
+
+  /* ── FUTURE FEATURES ── */
+  .future-section {
+    margin-top: 48px;
+  }
+  .future-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    color: var(--text);
+    margin-bottom: 6px;
+    text-align: center;
+  }
+  .future-title em { color: var(--gold); font-style: normal; }
+  .future-sub { font-size: 12px; color: var(--text-dim); text-align: center; margin-bottom: 24px; }
+
+  .future-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .future-card {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    padding: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .future-card::after {
+    content: 'COMING SOON';
+    position: absolute;
+    top: 10px; right: -20px;
+    background: var(--surface3);
+    color: var(--text-dim);
+    font-size: 8px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.15em;
+    padding: 3px 28px;
+    transform: rotate(35deg);
+  }
+  .future-icon { font-size: 24px; margin-bottom: 10px; }
+  .future-name { font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--text); }
+  .future-desc { font-size: 11px; color: var(--text-dim); line-height: 1.5; }
+  .future-phase { font-size: 10px; font-family: 'DM Mono', monospace; color: var(--gold); margin-top: 8px; }
+
+  @media (max-width: 900px) {
+    .screens-row { grid-template-columns: 1fr; }
+    .compare-grid { grid-template-columns: 1fr 1fr 1fr; }
+    .future-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
 </head>
-<body class="grain">
+<body>
 
-  <!-- NAV (от оригинала) -->
-  <nav class="fixed top-0 left-0 right-0 z-50 px-8 py-6 flex justify-between items-center transition-all">
-    <a href="#" class="nav-logo text-2xl">GAIA<span class="text-amber-300">SPEAK</span></a>
-    <div class="flex items-center gap-8 text-sm uppercase tracking-widest">
-      <a href="#tokens" class="hover:text-amber-400">Tokens</a>
-      <a href="#membership" class="hover:text-amber-400">Членство</a>
-      <a href="#bracelet" class="hover:text-amber-400">Гривна</a>
-    </div>
-  </nav>
+<div class="mockup-wrapper">
 
-  <!-- HERO (от оригинала + 3-layer ticker) -->
-  <section id="hero" class="min-h-screen flex items-center justify-center text-center relative">
-    <div class="max-w-5xl mx-auto px-6">
-      <h1 class="text-7xl md:text-8xl font-light leading-none mb-6">Gaia Speak Protocol</h1>
-      <p class="text-2xl text-amber-100/70 mb-12">Злато и сребро. Кодирани. Реални. Вечни.</p>
+  <p class="mockup-title">GaiaSpeak Protocol — Design Mockup</p>
+  <p class="mockup-sub">Website (Free) vs App (Membership) — Hand this to your designer and developer</p>
 
-      <!-- 3-Layer Ticker -->
-      <div id="ticker" class="flex flex-col md:flex-row justify-center gap-12 mb-12 bg-black/60 p-8 rounded-3xl"></div>
+  <div class="screens-row">
 
-      <button onclick="showMembership()" class="bg-amber-400 text-black font-bold px-16 py-6 rounded-2xl text-lg hover:scale-105 transition">
-        Членство — 36.90 USD / месец
-      </button>
-    </div>
-  </section>
+    <!-- ═══════════════════════════════════
+         LEFT: WEBSITE (FREE)
+    ═══════════════════════════════════ -->
+    <div>
+      <div class="screen-label"><span></span> Website — Free, No Login Required</div>
+      <div class="browser-chrome">
+        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        <div class="url-bar">gaiaspeak.io</div>
+      </div>
+      <div class="screen-body">
 
-  <!-- TOKENS (от оригинала) -->
-  <section id="tokens" class="py-24">
-    <div class="max-w-6xl mx-auto px-6">
-      <h2 class="text-5xl text-center mb-16">Нашите Токени</h2>
-      <div class="grid md:grid-cols-2 gap-8">
-        <!-- GSG Card от оригинала -->
-        <div class="token-card bg-zinc-900 p-10 rounded-3xl border border-amber-400/20">
-          <h3 class="text-amber-400">GSG — GOLD</h3>
-          <p class="text-4xl mt-4">1g Gold Backed</p>
+        <!-- Nav -->
+        <div class="site-nav">
+          <div class="site-logo">GaiaSpeak <span>PROTOCOL</span></div>
+          <div class="nav-right">
+            <button class="btn-connect">Connect Wallet</button>
+            <button class="btn-app">Get App ↗</button>
+          </div>
         </div>
-        <!-- GSS Card -->
-        <div class="token-card bg-zinc-900 p-10 rounded-3xl border border-slate-400/20">
-          <h3 class="text-slate-400">GSS — SILVER</h3>
-          <p class="text-4xl mt-4">1g Silver Backed</p>
+
+        <!-- Hero -->
+        <div class="site-hero">
+          <div class="hero-tag">Tokenised Precious Metals · Polygon Network</div>
+          <div class="hero-h1">Buy <em>Gold</em> &<br>Silver on-chain</div>
+          <div class="hero-sub">Live oracle prices · Any amount from $1 · Your wallet, your metals</div>
         </div>
+
+        <!-- Prices -->
+        <div class="price-row">
+          <div class="price-card">
+            <div class="price-metal">Gold · GSG</div>
+            <div class="price-value">$85.34</div>
+            <div class="price-gram">per gram</div>
+            <div class="price-change">+0.42%</div>
+          </div>
+          <div class="price-card silver">
+            <div class="price-metal">Silver · GSS</div>
+            <div class="price-value" style="color:var(--silver-light)">$0.97</div>
+            <div class="price-gram">per gram</div>
+            <div class="price-change">+0.18%</div>
+          </div>
+        </div>
+
+        <!-- Buy Panel -->
+        <div class="buy-panel">
+          <div class="buy-tabs">
+            <div class="buy-tab active">Buy Gold (GSG)</div>
+            <div class="buy-tab">Buy Silver (GSS)</div>
+            <div class="buy-tab">Sell</div>
+          </div>
+          <div class="buy-body">
+            <div class="input-label">You spend</div>
+            <div class="input-row">
+              <input class="input-field" value="50" readonly>
+              <div class="input-unit">MATIC</div>
+            </div>
+            <div class="you-receive">
+              <div class="receive-label">You receive</div>
+              <div class="receive-value">0.412 <span style="font-size:14px;color:var(--text-dim)">GSG</span></div>
+            </div>
+            <button class="btn-buy">Connect Wallet to Buy</button>
+          </div>
+        </div>
+
+        <!-- Locked banner -->
+        <div class="locked-banner">
+          <div class="locked-left">
+            <div class="lock-icon">🔒</div>
+            <div class="locked-text">
+              <strong>More features in the App</strong>
+              Portfolio dashboard · NFT marketplace · Pioneer rewards · Physical redemption
+            </div>
+          </div>
+          <button class="btn-unlock">Get App</button>
+        </div>
+
+        <!-- Footer -->
+        <div class="site-footer-note">
+          <div class="footer-powered">Powered by <span>Chainlink</span> oracles · <span>Polygon</span> network</div>
+          <div class="footer-links">
+            <a class="footer-link" href="#">Terms</a>
+            <a class="footer-link" href="#">Docs</a>
+            <a class="footer-link" href="#">Contract ↗</a>
+          </div>
+        </div>
+
       </div>
     </div>
-  </section>
 
-  <!-- MEMBERSHIP (нова) -->
-  <section id="membership" class="py-24 bg-black/70">
-    <div class="max-w-4xl mx-auto text-center px-6">
-      <h2 class="text-5xl mb-8">Членство в Gaia Speak App</h2>
-      <p class="text-3xl text-amber-300 mb-8">36.90 USD / месец</p>
-      <p class="text-lg">Първи месец — пробен. След това пълен достъп до приложението, гривната и всички функции.</p>
+    <!-- ═══════════════════════════════════
+         RIGHT: APP (MEMBERSHIP)
+    ═══════════════════════════════════ -->
+    <div>
+      <div class="screen-label app-label"><span style="background:var(--silver)"></span> App — Membership Required (GSG token)</div>
+      <div class="phone-wrap">
+        <div class="phone-screen">
+          <div class="phone-notch">
+            <div class="notch-dot"></div>
+            <div class="notch-cam"></div>
+            <div class="notch-dot"></div>
+          </div>
+
+          <div class="app-status-bar">
+            <span>9:41</span>
+            <span>●●●●  WiFi  🔋</span>
+          </div>
+
+          <div class="app-header">
+            <div class="app-logo">GaiaSpeak</div>
+            <div class="app-member-badge">Pioneer Member</div>
+          </div>
+
+          <!-- Wallet card -->
+          <div class="app-wallet-card">
+            <div class="wallet-glow"></div>
+            <div class="wallet-label">Total Portfolio Value</div>
+            <div class="wallet-total">$<span>1,247</span>.83</div>
+            <div class="wallet-assets">
+              <div class="wallet-asset">
+                <div class="asset-symbol">GSG · Gold</div>
+                <div class="asset-amount">4.821</div>
+                <div class="asset-usd">$411.42</div>
+              </div>
+              <div class="wallet-asset">
+                <div class="asset-symbol">GSS · Silver</div>
+                <div class="asset-amount s">862.4</div>
+                <div class="asset-usd">$836.41</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick actions -->
+          <div class="app-actions">
+            <div class="action-btn"><div class="action-icon">⬇️</div><div class="action-label">Buy</div></div>
+            <div class="action-btn"><div class="action-icon">⬆️</div><div class="action-label">Sell</div></div>
+            <div class="action-btn"><div class="action-icon">↔️</div><div class="action-label">Transfer</div></div>
+            <div class="action-btn"><div class="action-icon">📦</div><div class="action-label">Redeem</div></div>
+          </div>
+
+          <!-- Market -->
+          <div class="app-section-title">Live Market</div>
+          <div class="market-row">
+            <div class="market-left">
+              <div class="metal-icon">🥇</div>
+              <div><div class="metal-name">Gold</div><div class="metal-ticker">GSG · XAU/USD</div></div>
+            </div>
+            <div class="market-right">
+              <div class="market-price">$85.34<span style="font-size:11px;color:var(--text-dim)">/g</span></div>
+              <div class="market-chg">▲ +0.42%</div>
+            </div>
+          </div>
+          <div class="market-row">
+            <div class="market-left">
+              <div class="metal-icon s">🥈</div>
+              <div><div class="metal-name">Silver</div><div class="metal-ticker">GSS · XAG/USD</div></div>
+            </div>
+            <div class="market-right">
+              <div class="market-price">$0.97<span style="font-size:11px;color:var(--text-dim)">/g</span></div>
+              <div class="market-chg">▲ +0.18%</div>
+            </div>
+          </div>
+
+          <!-- Member features -->
+          <div class="app-section-title" style="margin-top:10px">Member Features</div>
+          <div class="member-features">
+            <div class="feature-row">
+              <div class="feature-icon">🏛️</div>
+              <div class="feature-text"><div class="feature-name">NFT Marketplace</div><div class="feature-desc">Buy & sell with GSG/GSS</div></div>
+              <div class="feature-badge badge-live">Live</div>
+            </div>
+            <div class="feature-row">
+              <div class="feature-icon">🎖️</div>
+              <div class="feature-text"><div class="feature-name">Pioneer Rewards</div><div class="feature-desc">Earn GSG for referrals</div></div>
+              <div class="feature-badge badge-live">Live</div>
+            </div>
+            <div class="feature-row">
+              <div class="feature-icon">📊</div>
+              <div class="feature-text"><div class="feature-name">Portfolio Analytics</div><div class="feature-desc">Track performance over time</div></div>
+              <div class="feature-badge badge-new">New</div>
+            </div>
+          </div>
+
+          <!-- Bottom nav -->
+          <div class="app-bottom-nav">
+            <div class="nav-item active"><span class="nav-item-icon">🏠</span><div class="nav-item-label" style="color:var(--gold)">Home</div></div>
+            <div class="nav-item"><span class="nav-item-icon">📈</span><div class="nav-item-label">Market</div></div>
+            <div class="nav-item"><span class="nav-item-icon">👛</span><div class="nav-item-label">Wallet</div></div>
+            <div class="nav-item"><span class="nav-item-icon">🏛️</span><div class="nav-item-label">NFT</div></div>
+            <div class="nav-item"><span class="nav-item-icon">👤</span><div class="nav-item-label">Profile</div></div>
+          </div>
+
+        </div><!-- phone-screen -->
+      </div><!-- phone-wrap -->
     </div>
-  </section>
 
-  <!-- BRACELET (нова) -->
-  <section id="bracelet" class="py-24">
-    <div class="max-w-4xl mx-auto text-center px-6">
-      <h2 class="text-5xl mb-8">Gaia Speak Гривна</h2>
-      <p class="text-xl mb-12">Проекция. Офлайн. Автономна.</p>
-      <button class="border border-amber-400 px-12 py-6 rounded-2xl text-lg hover:bg-amber-400 hover:text-black transition">Pre-Order Гривна</button>
+  </div><!-- screens-row -->
+
+
+  <!-- ══════════════════════════════════════
+       COMPARISON TABLE
+  ══════════════════════════════════════ -->
+  <div class="compare-section">
+    <div class="compare-title">Website vs <em>App</em> — Feature Split</div>
+    <div class="compare-sub">Give this table to your developer. This is the exact scope for each product.</div>
+
+    <div class="compare-grid">
+      <div class="compare-col-head" style="color:var(--text-dim)">Feature</div>
+      <div class="compare-col-head gold-head">🌐 Website · Free</div>
+      <div class="compare-col-head silver-head">📱 App · Members Only</div>
+
+      <div class="compare-row">
+        <div class="compare-cell feature-name-cell">View live gold & silver price</div>
+        <div class="compare-cell"><span class="check">✓</span> Always visible</div>
+        <div class="compare-cell"><span class="check">✓</span> Always visible</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell feature-name-cell">Buy gold (GSG) with wallet</div>
+        <div class="compare-cell"><span class="check">✓</span> Connect wallet</div>
+        <div class="compare-cell"><span class="check">✓</span> One-tap buy</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell feature-name-cell">Buy silver (GSS) with wallet</div>
+        <div class="compare-cell"><span class="check">✓</span> Connect wallet</div>
+        <div class="compare-cell"><span class="check">✓</span> One-tap buy</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell feature-name-cell">Sell tokens</div>
+        <div class="compare-cell"><span class="check">✓</span> Basic</div>
+        <div class="compare-cell"><span class="check">✓</span> Full history</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell feature-name-cell">See your token balance</div>
+        <div class="compare-cell"><span class="check">✓</span> Basic</div>
+        <div class="compare-cell"><span class="check">✓</span> Full dashboard</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell feature-name-cell">Personal wallet dashboard</div>
+        <div class="compare-cell"><span class="cross">—</span> Not available</div>
+        <div class="compare-cell"><span class="check">✓</span> Full portfolio</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell feature-name-cell">NFT marketplace</div>
+        <div class="compare-cell"><span class="cross">—</span> Locked</div>
+        <div class="compare-cell"><span class="check">✓</span> Buy & sell</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell feature-name-cell">Pioneer rewards & referrals</div>
+        <div class="compare-cell"><span class="cross">—</span> Locked</div>
+        <div class="compare-cell"><span class="check">✓</span> Pioneer only</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell feature-name-cell">Physical gold/silver redemption</div>
+        <div class="compare-cell"><span class="cross">—</span> Locked</div>
+        <div class="compare-cell"><span class="check">✓</span> Members only</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell feature-name-cell">P2P member-to-member transfer</div>
+        <div class="compare-cell"><span class="cross">—</span> Locked</div>
+        <div class="compare-cell"><span class="check">✓</span> 0.02% fee</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell feature-name-cell">Price alerts & notifications</div>
+        <div class="compare-cell"><span class="cross">—</span> Locked</div>
+        <div class="compare-cell"><span class="check">✓</span> Push alerts</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell feature-name-cell">Membership required</div>
+        <div class="compare-cell"><span style="color:var(--green);font-size:12px">No — free access</span></div>
+        <div class="compare-cell"><span style="color:var(--gold);font-size:12px">Yes — GSG membership</span></div>
+      </div>
     </div>
-  </section>
+  </div>
 
-  <script>
-    function updateTicker() {
-      document.getElementById('ticker').innerHTML = `
-        <div><div class="text-xs text-amber-300/70">GLOBAL</div><div class="text-4xl">$2,678</div></div>
-        <div><div class="text-xs text-amber-300/70">ДОСТАВЧИК</div><div class="text-4xl">$2,695</div></div>
-        <div><div class="text-xs text-amber-300/70">КЛИЕНТ</div><div class="text-4xl text-white">$2,830</div></div>
-      `;
-    }
-    setInterval(updateTicker, 7000);
-    updateTicker();
 
-    function showMembership() {
-      alert("Месечно членство: 36.90 USD\nПърви месец пробен.\nДава достъп до Gaia Speak App.");
-    }
-  </script>
+  <!-- ══════════════════════════════════════
+       FUTURE FEATURES TO ADD OVER TIME
+  ══════════════════════════════════════ -->
+  <div class="future-section">
+    <div class="future-title">Features to Add Over <em>Time</em></div>
+    <div class="future-sub">Tell your developer: build these after launch, one by one. Not all at once.</div>
+
+    <div class="future-grid">
+      <div class="future-card">
+        <div class="future-icon">💳</div>
+        <div class="future-name">Credit Card Buy (Fiat On-Ramp)</div>
+        <div class="future-desc">Regular people buy gold with Visa/Mastercard via MoonPay. No wallet needed.</div>
+        <div class="future-phase">Phase 2 — after registration</div>
+      </div>
+      <div class="future-card">
+        <div class="future-icon">📊</div>
+        <div class="future-name">Price Charts & History</div>
+        <div class="future-desc">Gold and silver price charts. Show 7 day, 30 day, 1 year performance.</div>
+        <div class="future-phase">Phase 1 — add anytime</div>
+      </div>
+      <div class="future-card">
+        <div class="future-icon">🔔</div>
+        <div class="future-name">Price Alerts</div>
+        <div class="future-desc">Member sets a target price. App sends push notification when gold hits it.</div>
+        <div class="future-phase">Phase 1 — app only</div>
+      </div>
+      <div class="future-card">
+        <div class="future-icon">🌍</div>
+        <div class="future-name">Multi-Language Support</div>
+        <div class="future-desc">Swahili, Arabic, French for East Africa and MENA markets.</div>
+        <div class="future-phase">Phase 2</div>
+      </div>
+      <div class="future-card">
+        <div class="future-icon">📱</div>
+        <div class="future-name">Native Mobile App (iOS/Android)</div>
+        <div class="future-desc">Full React Native app. Better UX for non-crypto users. Biometric login.</div>
+        <div class="future-phase">Phase 2 — after revenue</div>
+      </div>
+      <div class="future-card">
+        <div class="future-icon">🤝</div>
+        <div class="future-name">OTC Large Orders</div>
+        <div class="future-desc">For orders over $10,000. Direct contact with founder. Reduced fees.</div>
+        <div class="future-phase">Phase 2</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- mockup-wrapper -->
 </body>
-  </html>
+</html>
